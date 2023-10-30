@@ -1,0 +1,26 @@
+{
+	"name": "dasher/india-withdraw",
+	"description": "india withdraw rule and validate",
+	"keywords": [
+		"withdraw",
+		"ifsc",
+		"india name",
+		"india mobile"
+	],
+	"authors": [
+		{
+			"name": "dasher",
+			"email": "shaoyejibada@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"license": "MIT",
+	"require": {
+		"php": ">=7.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Dasher\\IndiaWithdraw\\": "src"
+		}
+	}
+}
