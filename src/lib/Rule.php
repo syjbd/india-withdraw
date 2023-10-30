@@ -15,6 +15,7 @@ class Rule{
     protected $max = 0;
     protected $num = 0;
     protected $ratio = 0;
+    protected $minFee = 0;
 
     protected $withdrawAmount = 0;
     protected $withdrawNum = 0;
@@ -23,13 +24,13 @@ class Rule{
     protected $balance = 0;
     protected $identification = 1;
 
-    public function __construct($status,$min,$max,$num,$ratio){
-        $this->status   = $status;
-        $this->min      = $min;
-        $this->max      = $max;
-        $this->num      = $num;
-        $this->ratio    = $ratio;
-
+    public function __construct($ruleConfig){
+        $this->status   = $ruleConfig['status'];
+        $this->min      = $ruleConfig['min'];
+        $this->max      = $ruleConfig['max'];
+        $this->num      = $ruleConfig['num'];
+        $this->ratio    = $ruleConfig['ratio'];
+        $this->minFee   = $ruleConfig['min_fee'];
     }
 
     public function setWithdrawData($withdrawAmount){
@@ -37,10 +38,10 @@ class Rule{
         return $this;
     }
 
-    public function setUserAccount($balance,$registerTime,$identification){
-        $this->balance          = $balance;
-        $this->registerTime     = $registerTime;
-        $this->identification   = $identification;
+    public function setUserAccount($userAccount){
+        $this->balance          = $userAccount['balance'];
+        $this->registerTime     = $userAccount['create_time'];
+        $this->identification   = $userAccount['identification'];
         return $this;
     }
 
@@ -71,7 +72,7 @@ class Rule{
             'max'       => $this->max,
             'num'       => $this->num,
             'ratio'     => $this->ratio,
-            'fee'       => $this->withdrawAmount * $this->ratio
+            'fee'       => max($this->withdrawAmount * $this->ratio,$this->minFee)
         ];
     }
 }

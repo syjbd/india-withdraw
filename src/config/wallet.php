@@ -9,5 +9,6 @@ return [
     'order_total'       => 0,
     'recharge_total'    => 0,
     'withdraw_times'    => 0,
-    'recharge_times'    => 0
+    'recharge_times'    => 0,
+    'free_amount'       => 0,
 ];

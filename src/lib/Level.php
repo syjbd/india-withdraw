@@ -18,12 +18,12 @@ class Level{
     protected $withdrawAmount = 0;
     protected $withdrawNum = 0;
 
-    public function __construct($status,$min,$max,$num,$ratio, $withdrawAmount,$withdrawNum){
-        $this->status   = $status;
-        $this->min      = $min;
-        $this->max      = $max;
-        $this->num      = $num;
-        $this->ratio    = $ratio;
+    public function __construct($levelConfig, $withdrawAmount,$withdrawNum){
+        $this->status   = $levelConfig['status'];
+        $this->min      = $levelConfig['min'];
+        $this->max      = $levelConfig['max'];
+        $this->num      = $levelConfig['num'];
+        $this->ratio    = $levelConfig['ratio'];
         $this->withdrawNum = $withdrawNum;
         $this->withdrawAmount = $withdrawAmount;
     }
@@ -33,7 +33,7 @@ class Level{
      */
     public function run(){
         //等级检测是否开启
-        if($this->status == 0) return true;
+        if($this->status == 0) return false;
         //等级最小金额
         if($this->min > 0 && $this->withdrawAmount < $this->min){
             throw new WithdrawException('withdraw.level.amount.min');

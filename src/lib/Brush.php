@@ -14,12 +14,12 @@ class Brush{
 
     protected $userWallet;
 
-    public function __construct($status,$multiple,$ratio,$userWallet)
+    public function __construct($brushConfig,$userWallet)
     {
-        $this->status = $status;
-        $this->multiple = $multiple;
-        $this->ratio = $ratio;
-        $this->userWallet = $userWallet;
+        $this->status       = $brushConfig['status'];
+        $this->multiple     = $brushConfig['multiple'];
+        $this->ratio        = $brushConfig['ratio'];
+        $this->userWallet   = $userWallet;
     }
 
     public function run(){
