@@ -108,9 +108,9 @@ class Withdraw{
         try {
             $brushObj = new Brush($this->brushConfig, $this->walletData);
             $brushBool = $brushObj->run();
-            $brushData = $brushObj->getData();
             if($brushBool){
                 $result['launder_status'] = true;
+                $result['withdraw_fee_ratio'] = $this->brushConfig['ratio'];
                 $result['fee'] = $this->withdrawData['amount'] * $this->brushConfig['ratio'];
                 $result['can_get_amount'] = $this->withdrawData['amount'] - $result['fee'];
                 return $result;
@@ -128,14 +128,21 @@ class Withdraw{
             $ruleObj->run();
             $ruleResult = $ruleObj->getData();
 
+
+
             $levelFee = 0;
             $fee = 0;
+            $feeRatio = 0;
             if($levelBool && $levelResult['ratio'] > 0){
-                $levelFee = $this->withdrawData['amount'] * $levelResult['ratio'];
+                $levelFee = ($this->withdrawData['amount']-$result['free_fee_amount']) * $levelResult['ratio'];
+                $feeRatio = $levelResult['ratio'];
             }
-            if($ruleResult['fee'] > $levelFee){
-                $fee = $ruleResult['fee'];
+            $ruleFee = max(($this->withdrawData['amount']-$result['free_fee_amount']) * $ruleResult['ratio'], $ruleResult['fee']);
+            if($ruleFee > $levelFee){
+                $fee = $ruleFee;
+                $feeRatio = $ruleResult['ratio'];
             }
+            $result['withdraw_fee_ratio'] = $feeRatio;
             $result['fee'] = $fee;
             $result['can_get_amount'] = $this->withdrawData['amount'] - $result['fee'];
             return $result;
@@ -174,6 +181,7 @@ class Withdraw{
                 $result['launder_status'] = true;
                 $result['fee'] = $amount * $this->brushConfig['ratio'];
                 $result['can_get_amount'] = $amount - $result['fee'];
+                $result['withdraw_fee_ratio'] = $this->brushConfig['ratio'];
                 return $result;
             }
 
