@@ -200,10 +200,6 @@ class Withdraw{
             $result['error'] = $e->getMessage();
             $result['status'] = false;
             return $result;
-        }catch (\Exception $e){
-            $result['status'] = false;
-            $result['error'] = $e->getMessage();
-            return $result;
         }
     }
 
