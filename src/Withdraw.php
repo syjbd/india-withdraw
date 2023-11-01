@@ -153,7 +153,7 @@ class Withdraw{
     public function amount($withdrawNum,$amount): array
     {
         $result = [
-            'amount'                => $this->withdrawData['amount'],
+            'amount'                => $amount,
             'fee'                   => 0,
             'min_withdraw_fee'      => 0,
             'withdraw_fee_ratio'    => 0,
@@ -171,30 +171,30 @@ class Withdraw{
             $brushBool = $brushObj->run();
             if($brushBool){
                 $result['launder_status'] = true;
-                $result['fee'] = $this->withdrawData['amount'] * $this->brushConfig['ratio'];
-                $result['can_get_amount'] = $this->withdrawData['amount'] - $result['fee'];
+                $result['fee'] = $amount * $this->brushConfig['ratio'];
+                $result['can_get_amount'] = $amount - $result['fee'];
                 return $result;
             }
 
-            $levelObj = new Level($this->levelConfig,$this->withdrawData['amount'], $withdrawNum);
+            $levelObj = new Level($this->levelConfig,$amount, $withdrawNum);
             $levelBool = $levelObj->run();
             $levelResult = $levelObj->getData();
 
             $ruleObj = new Rule($this->ruleConfig);
-            $ruleObj->setUserAccount($this->userData)->setWithdrawData($this->withdrawData['amount'])->setWithdrawNum($withdrawNum);
+            $ruleObj->setUserAccount($this->userData)->setWithdrawData($amount)->setWithdrawNum($withdrawNum);
             $ruleObj->run();
             $ruleResult = $ruleObj->getData();
 
             $levelFee = 0;
             $fee = 0;
             if($levelBool && $levelResult['ratio'] > 0){
-                $levelFee = $this->withdrawData['amount'] * $levelResult['ratio'];
+                $levelFee = $amount * $levelResult['ratio'];
             }
             if($ruleResult['fee'] > $levelFee){
                 $fee = $ruleResult['fee'];
             }
             $result['fee'] = $fee;
-            $result['can_get_amount'] = $this->withdrawData['amount'] - $result['fee'];
+            $result['can_get_amount'] = $amount - $result['fee'];
             return $result;
         }catch (WithdrawException $e){
             $result['error'] = $e->getMessage();
