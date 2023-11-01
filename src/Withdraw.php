@@ -188,13 +188,17 @@ class Withdraw{
 
             $levelFee = 0;
             $fee = 0;
+            $feeRatio = 0;
             if($levelBool && $levelResult['ratio'] > 0){
                 $levelFee = ($amount-$result['free_fee_amount']) * $levelResult['ratio'];
+                $feeRatio = $levelResult['ratio'];
             }
             $ruleFee = max(($amount-$result['free_fee_amount']) * $ruleResult['ratio'], $ruleResult['fee']);
             if($ruleFee > $levelFee){
                 $fee = $ruleFee;
+                $feeRatio = $ruleResult['ratio'];
             }
+            $result['withdraw_fee_ratio'] = $feeRatio;
             $result['fee'] = $fee;
             $result['can_get_amount'] = $amount - $result['fee'];
             return $result;
