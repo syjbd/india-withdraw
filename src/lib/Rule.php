@@ -30,7 +30,7 @@ class Rule{
         $this->max      = $ruleConfig['max'];
         $this->num      = $ruleConfig['num'];
         $this->ratio    = $ruleConfig['ratio'];
-        $this->minFee   = $ruleConfig['min_fee'];
+        $this->minFee   = $ruleConfig['fee'];
     }
 
     public function setWithdrawData($withdrawAmount){
