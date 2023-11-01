@@ -110,9 +110,9 @@ class Withdraw{
             $brushBool = $brushObj->run();
             if($brushBool){
                 $result['launder_status'] = true;
-                $result['withdraw_fee_ratio'] = $this->brushConfig['ratio'];
                 $result['fee'] = $this->withdrawData['amount'] * $this->brushConfig['ratio'];
                 $result['can_get_amount'] = $this->withdrawData['amount'] - $result['fee'];
+                $result['withdraw_fee_ratio'] = $this->brushConfig['ratio'];
                 return $result;
             }
 
@@ -127,8 +127,6 @@ class Withdraw{
             $ruleObj->setUserAccount($this->userData)->setWithdrawData($this->withdrawData['amount'])->setWithdrawNum($withdrawNum);
             $ruleObj->run();
             $ruleResult = $ruleObj->getData();
-
-
 
             $levelFee = 0;
             $fee = 0;
