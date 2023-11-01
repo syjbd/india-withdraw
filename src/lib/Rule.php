@@ -58,7 +58,7 @@ class Rule{
         if($this->status == 0) return true;
 
         if($this->balance < $this->withdrawAmount)  throw new WithdrawException('withdraw.balance.enough');
-        if(time() - $this->registerTime < $this->registerTime)  throw new WithdrawException('Account less than one hour old');
+        if(time() - $this->registerTime < 3600)  throw new WithdrawException('Account less than one hour old');
         if($this->min > 0 && $this->withdrawAmount < $this->min)   throw new WithdrawException('withdraw.amount.min');
         if($this->max > 0 && $this->withdrawAmount > $this->max)   throw new WithdrawException('withdraw.amount.max');
         if($this->num > 0 && $this->withdrawNum >= $this->num)  throw new WithdrawException('withdraw.num');
