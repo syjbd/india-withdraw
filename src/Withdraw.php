@@ -70,6 +70,7 @@ class Withdraw{
 
     public function setRuleConfig($ruleConfig){
         $this->ruleConfig = [
+            'status'    => $ruleConfig['status'],
             'min'       => $ruleConfig['min'],
             'max'       => $ruleConfig['max'],
             'ratio'     => $ruleConfig['ratio'],
