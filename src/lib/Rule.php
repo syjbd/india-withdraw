@@ -72,7 +72,7 @@ class Rule{
             'max'       => $this->max,
             'num'       => $this->num,
             'ratio'     => $this->ratio,
-            'fee'       => max($this->withdrawAmount * $this->ratio,$this->minFee)
+            'fee'       => 0
         ];
     }
 }

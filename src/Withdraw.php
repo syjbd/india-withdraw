@@ -165,7 +165,7 @@ class Withdraw{
             'error'                 => "",
             'status'                => true,
             'launder_status'        => false,
-            'free_fee_amount'       => $this->walletData['free_amount']
+            'free_fee_amount'       => min($this->walletData['free_amount'],$amount)
         ];
         try {
             $brushObj = new Brush($this->brushConfig, $this->walletData);
@@ -189,10 +189,11 @@ class Withdraw{
             $levelFee = 0;
             $fee = 0;
             if($levelBool && $levelResult['ratio'] > 0){
-                $levelFee = $amount * $levelResult['ratio'];
+                $levelFee = ($amount-$result['free_fee_amount']) * $levelResult['ratio'];
             }
-            if($ruleResult['fee'] > $levelFee){
-                $fee = $ruleResult['fee'];
+            $ruleFee = max(($amount-$result['free_fee_amount']) * $ruleResult['ratio'], $ruleResult['fee']);
+            if($ruleFee > $levelFee){
+                $fee = $ruleFee;
             }
             $result['fee'] = $fee;
             $result['can_get_amount'] = $amount - $result['fee'];
