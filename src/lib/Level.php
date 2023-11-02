@@ -36,15 +36,15 @@ class Level{
         if($this->status == 0) return false;
         //等级最小金额
         if($this->min > 0 && $this->withdrawAmount < $this->min){
-            throw new WithdrawException('withdraw.level.amount.min');
+            throw new WithdrawException("Amount cannot be less than {$this->min}");
         }
         //等级最大金额
         if($this->max > 0 && $this->withdrawAmount > $this->max){
-            throw new WithdrawException('withdraw.level.amount.max');
+            throw new WithdrawException("Amount cannot be more than {$this->max}");
         }
         //等级每日提现次数
         if($this->num > 0 && $this->withdrawNum >= $this->num){
-            throw new WithdrawException('withdraw.level.num');
+            throw new WithdrawException('You currently do not have the number of withdrawal');
         }
         return true;
     }
