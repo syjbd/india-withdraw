@@ -57,7 +57,7 @@ class Rule{
         //等级检测是否开启
         if($this->status == 0) return true;
 
-        if($this->balance < $this->withdrawAmount)  throw new WithdrawException('Account less than one hour old');
+        if($this->balance < $this->withdrawAmount)  throw new WithdrawException('Withdrawal balance is insufficient');
         if(time() - $this->registerTime < 3600)  throw new WithdrawException('Account less than one hour old');
         if($this->min > 0 && $this->withdrawAmount < $this->min)   throw new WithdrawException("Amount cannot be less than {$this->min}");
         if($this->max > 0 && $this->withdrawAmount > $this->max)   throw new WithdrawException("Amount cannot be more than {$this->max}");
