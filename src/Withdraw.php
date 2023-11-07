@@ -103,7 +103,7 @@ class Withdraw{
             'error'                 => "",
             'status'                => true,
             'launder_status'        => false,
-            'free_fee_amount'       => $this->walletData['free_amount']
+            'free_fee_amount'       => min($this->walletData['free_amount'],$this->withdrawData['amount'])
         ];
         try {
             $brushObj = new Brush($this->brushConfig, $this->walletData);
