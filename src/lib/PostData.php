@@ -44,8 +44,8 @@ class PostData{
      * @throws WithdrawException
      */
     public function checkFormat(){
-        if(!preg_match('/^[A-Z|a-z]{4}[0][\d]{6}$/', $this->ifsc)) throw new WithdrawException('The parameter "ifsc" error');
-        if(!preg_match('/^[789]\d{9}$/', $this->mobile)) throw new WithdrawException('The parameter "mobile" error');
+        if(!preg_match('/^[a-zA-Z0-9]{11}$/', $this->ifsc)) throw new WithdrawException('The parameter "ifsc" error');
+        if(!preg_match('/^[6789]\d{9}$/', $this->mobile)) throw new WithdrawException('The parameter "mobile" error');
         if(!preg_match('/^\d+$/', $this->accountVal)) throw new WithdrawException('The parameter "account" error');
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) throw new WithdrawException('The parameter "email" error');
         return $this;
