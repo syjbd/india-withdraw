@@ -21,6 +21,12 @@ class Withdraw{
     protected $levelConfig;
     protected $brushConfig;
 
+    protected $checkFormat = ['ifsc','mobile','accountVal','email'];
+
+    public function setCheckFormat($checkFormat){
+        $this->checkFormat = $checkFormat;
+        return $this;
+    }
 
     public function setUserData($userData){
         $this->userData = [
@@ -117,7 +123,7 @@ class Withdraw{
             }
 
             $postObj = new PostData($this->withdrawData);
-            $postObj->checkEmpty()->checkFormat();
+            $postObj->checkEmpty()->checkFormat($this->checkFormat);
 
             $levelObj = new Level($this->levelConfig,$this->withdrawData['amount'], $withdrawNum);
             $levelBool = $levelObj->run();
